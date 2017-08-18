@@ -5,7 +5,7 @@ import { NativeModules } from 'react-native';
 import Button from './components/Button'
 import testID from './utils/testID'
 
-var Payments = NativeModules.TPSStripeManager;
+const { Payments } = DangerZone;
 Payments.initialize({
   publishableKey: 'YOUR_KEY'
 })
@@ -66,17 +66,15 @@ export default class App extends React.Component {
         token: null,
       })
       const token = await Payments.paymentRequestWithApplePayAsync([{
-        label: 'Another 20 Boxes of La Croix',
+        label: 'Item 1',
         amount: '200.00',
       }, {
-        label: 'How to Win At Foosball by Wilson Zhao',
+        label: 'Item 2',
         amount: '60.00',
       }, {
-        label: 'Expo, the Coolest Company Ever',
+        label: 'Expo, Inc',
         amount: '260.00',
       }], {
-        // requiredBillingAddressFields: 'all',
-        // requiredShippingAddressFields: 'all',
         shippingMethods: [{
           id: 'fedex',
           label: 'FedEX',
@@ -90,16 +88,10 @@ export default class App extends React.Component {
 
       if (this.state.complete) {
         var testVar = await Payments.completeApplePayRequestAsync()
-        console.log('SURR');
-        console.log(testVar);
-        console.log('SURR');
         console.log('Apple Pay payment completed')
         this.setState({ status: 'Apple Pay payment completed'})
       } else {
         var testVar = await Payments.cancelApplePayRequestAsync()
-        console.log('SURR');
-        console.log(testVar);
-        console.log('SURR');
         console.log('Apple Pay payment cenceled')
         this.setState({ status: 'Apple Pay payment cenceled'})
       }
