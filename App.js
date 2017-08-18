@@ -5,12 +5,9 @@ import { NativeModules } from 'react-native';
 import Button from './components/Button'
 import testID from './utils/testID'
 
-var Bluetooth = NativeModules.BleManager;
-// const { Payments } = DangerZone;
 var Payments = NativeModules.TPSStripeManager;
-// var test = NativeModules.AIRMapManager;
 Payments.initialize({
-  publishableKey: 'pk_test_YRjUHSZfJza9RsuNDx9s6e5V'
+  publishableKey: 'YOUR_KEY'
 })
 
 const styles = StyleSheet.create({
@@ -41,27 +38,6 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
 });
-
-const items = [{
-  label: 'Another 20 Boxes of La Croix',
-  amount: '50.00',
-}, {
-  label: 'Expo',
-  amount: '50.00',
-}]
-
-const shippingMethods = [{
-  id: 'fedex',
-  label: 'FedEX',
-  detail: 'Test @ 10',
-  amount: '10.00',
-}]
-
-const options = {
-  requiredBillingAddressFields: 'all',
-  requiredShippingAddressFields: 'all',
-  shippingMethods,
-}
 
 export default class App extends React.Component {
 
@@ -195,14 +171,5 @@ export default class App extends React.Component {
         </View>
       </View>
     )
-  }
-
-  async testPayments () {
-      var t = await Payments.deviceSupportsApplePayAsync();
-      console.log(t);
-      const token = await Payments.paymentRequestWithApplePayAsync(items, options)
-      // var t = test.takeSnapshot();
-      Payments.completeApplePayRequest()
-      return t;
   }
 }
